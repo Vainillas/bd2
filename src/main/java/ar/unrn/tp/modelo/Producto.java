@@ -1,13 +1,28 @@
 package ar.unrn.tp.modelo;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Producto {
     private String codigo;
     private String descripcion;
     private Categoria categoria;
-    @Getter
+    private Marca marca;
     private double precio;
 
-    // Constructor, getters y setters
+    public Producto(String codigo, String descripcion, Categoria categoria, Marca marca) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.marca = marca;
+    }
+
+    public boolean sosDeMarca(Marca marca) {
+        return this.marca.equals(marca);
+    }
+    public double aplicarDescuento(double descuento){
+        return precio - (precio * descuento);
+    }
 }

@@ -3,7 +3,7 @@ package ar.unrn.tp.modelo;
 import java.util.List;
 
 public class CarritoCompra {
-    private Cliente cliente;
+    private final Cliente cliente;
     private List<Producto> productos;
 
     public CarritoCompra(Cliente cliente, List<Producto> productos) {
