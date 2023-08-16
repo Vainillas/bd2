@@ -26,4 +26,9 @@ public class PromocionProducto implements Promocion{
         }
         return descuento;
     }
+
+    @Override
+    public double aplicarPromocion(List<Producto> productos) {
+        return aplicarPromocion(productos, null);
+    }
 }

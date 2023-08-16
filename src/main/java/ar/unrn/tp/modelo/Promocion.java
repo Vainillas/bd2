@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface Promocion {
     double aplicarPromocion(List<Producto> productos, TarjetaCredito tarjetaCredito);
+    double aplicarPromocion(List<Producto> productos);
 
 }

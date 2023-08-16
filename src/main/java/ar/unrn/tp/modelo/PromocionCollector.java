@@ -20,4 +20,15 @@ public class PromocionCollector {
         }
         return total-descuento;
     }
+    public double retornarTotal(List<Producto> productos) {
+        double descuento = 0;
+        double total = 0;
+        for(Producto producto : productos) {
+            total += producto.getPrecio();
+        }
+        for (Promocion promocion : promociones) {
+            descuento += promocion.aplicarPromocion(productos);
+        }
+        return total-descuento;
+    }
 }

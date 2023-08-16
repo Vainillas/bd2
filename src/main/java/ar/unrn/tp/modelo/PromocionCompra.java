@@ -25,4 +25,9 @@ public class PromocionCompra implements Promocion {
             }
             return descuento;
     }
+
+    @Override
+    public double aplicarPromocion(List<Producto> productos) {
+        return 0;
+    }
 }

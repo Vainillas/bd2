@@ -3,6 +3,7 @@ package ar.unrn.tp.modelo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Getter
 @Setter
@@ -12,16 +13,14 @@ public class CarritoCompra {
     private TarjetaCredito tarjetaCredito;
     private PromocionCollector promociones;
 
-    public CarritoCompra(Cliente cliente, List<Producto> productos, TarjetaCredito tarjetaCredito, PromocionCollector promociones) {
+    public CarritoCompra(Cliente cliente, List<Producto> productos,  PromocionCollector promociones) {
         this.cliente = cliente;
         this.productos = productos;
-        this.tarjetaCredito = tarjetaCredito;
         this.promociones = promociones;
     }
-    public CarritoCompra(Cliente cliente, List<Producto> productos, TarjetaCredito tarjetaCredito, List<Promocion> promociones) {
+    public CarritoCompra(Cliente cliente, List<Producto> productos, List<Promocion>promociones) {
         this.cliente = cliente;
         this.productos = productos;
-        this.tarjetaCredito = tarjetaCredito;
         this.promociones = new PromocionCollector(promociones);
     }
 
@@ -37,12 +36,27 @@ public class CarritoCompra {
     public void vaciarCarrito() {
         this.productos.clear();
     }
-
     public double calcularTotal() {
         double total = 0;
         for (Producto producto : this.productos) {
             total += producto.getPrecio();
         }
-        return total;
+        return total - this.promociones.retornarTotal(this.productos);
+    }
+    public double calcularTotal(TarjetaCredito tarjetaCredito){
+        double total = 0;
+        for (Producto producto : this.productos) {
+            total += producto.getPrecio();
+        }
+        return total - this.promociones.retornarTotal(this.productos, tarjetaCredito);
+    }
+    public Venta generarVenta(TarjetaCredito tarjetaCredito) {
+        List<ProductoHistorico> productoHistoricos = List.of(productos.stream().map(producto -> new ProductoHistorico(producto.getCodigo(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getMarca())).toArray(ProductoHistorico[]::new));
+        pagar(tarjetaCredito);
+        return new Venta(LocalDateTime.now(),this.cliente, productoHistoricos,this.calcularTotal(tarjetaCredito) );
+    }
+
+    private void pagar(TarjetaCredito tarjetaCredito) {
+        tarjetaCredito.pagar(this.calcularTotal(tarjetaCredito));
     }
 }

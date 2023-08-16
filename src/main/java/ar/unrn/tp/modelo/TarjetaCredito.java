@@ -17,4 +17,8 @@ public class TarjetaCredito {
     public void sumarFondos(double monto) {
         fondos += monto;
     }
+
+    public void pagar(double v) {
+        this.descontarFondos(v);
+    }
 }
