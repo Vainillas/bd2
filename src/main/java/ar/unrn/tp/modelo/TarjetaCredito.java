@@ -1,8 +1,17 @@
 package ar.unrn.tp.modelo;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class TarjetaCredito {
     private boolean activa;
     private double fondos;
+
+    public TarjetaCredito(boolean activa, double fondos) {
+        this.activa = activa;
+        this.fondos = fondos;
+    }
+
 
     public boolean estaActiva() {
         return activa;

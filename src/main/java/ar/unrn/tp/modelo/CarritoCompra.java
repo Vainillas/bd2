@@ -37,18 +37,10 @@ public class CarritoCompra {
         this.productos.clear();
     }
     public double calcularTotal() {
-        double total = 0;
-        for (Producto producto : this.productos) {
-            total += producto.getPrecio();
-        }
-        return total - this.promociones.retornarTotal(this.productos);
+        return this.promociones.retornarTotal(this.productos);
     }
     public double calcularTotal(TarjetaCredito tarjetaCredito){
-        double total = 0;
-        for (Producto producto : this.productos) {
-            total += producto.getPrecio();
-        }
-        return total - this.promociones.retornarTotal(this.productos, tarjetaCredito);
+        return this.promociones.retornarTotal(this.productos, tarjetaCredito);
     }
     public Venta generarVenta(TarjetaCredito tarjetaCredito) {
         List<ProductoHistorico> productoHistoricos = List.of(productos.stream().map(producto -> new ProductoHistorico(producto.getCodigo(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getMarca())).toArray(ProductoHistorico[]::new));

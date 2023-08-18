@@ -12,11 +12,12 @@ public class Producto {
     private Marca marca;
     private double precio;
 
-    public Producto(String codigo, String descripcion, Categoria categoria, Marca marca) {
+    public Producto(String codigo, String descripcion, Categoria categoria, Marca marca, double precio) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.marca = marca;
+        this.precio = precio;
     }
 
     public boolean sosDeMarca(Marca marca) {
