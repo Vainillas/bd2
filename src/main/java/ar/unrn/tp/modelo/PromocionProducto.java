@@ -17,10 +17,10 @@ public class PromocionProducto implements Promocion{
     @Override
     public double aplicarPromocion(List<Producto> productos, TarjetaCredito tarjetaCredito) {
         double descuento = 0;
-        if((diaInicio.isEqual(LocalDate.now()) && diaFin.isAfter(LocalDate.now())) || diaInicio.isEqual(LocalDate.now()) || diaFin.isEqual(LocalDate.now())) {
+        if((diaInicio.isEqual(LocalDate.now()) && diaFin.isAfter(LocalDate.now())) || (diaInicio.isBefore(LocalDate.now()) && diaFin.isEqual(LocalDate.now())) || (diaInicio.isBefore(LocalDate.now()) && diaFin.isAfter(LocalDate.now()))) {
             for(Producto producto : productos) {
                 if(producto.sosDeMarca(marca)) {
-                    descuento -= producto.aplicarDescuento(DESCUENTO);
+                    descuento -= producto.getPrecio() - producto.aplicarDescuento(DESCUENTO);
                 }
             }
         }

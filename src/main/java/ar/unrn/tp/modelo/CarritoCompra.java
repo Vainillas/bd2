@@ -18,11 +18,6 @@ public class CarritoCompra {
         this.productos = productos;
         this.promociones = promociones;
     }
-    public CarritoCompra(Cliente cliente, List<Producto> productos, List<Promocion>promociones) {
-        this.cliente = cliente;
-        this.productos = productos;
-        this.promociones = new PromocionCollector(promociones);
-    }
 
     public CarritoCompra(Cliente cliente) {
         this.cliente = cliente;
