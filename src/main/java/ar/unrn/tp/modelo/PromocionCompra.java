@@ -9,6 +9,7 @@ public class PromocionCompra implements Promocion {
     private LocalDate diaFin;
     private EmisorTarjeta emisorTarjeta;
     public PromocionCompra(LocalDate diaInicio, LocalDate diaFin, EmisorTarjeta emisorTarjeta) {
+        validarAtributosPromocion(diaInicio, diaFin);
         this.diaInicio = diaInicio;
         this.diaFin = diaFin;
         this.emisorTarjeta = emisorTarjeta;
@@ -29,5 +30,16 @@ public class PromocionCompra implements Promocion {
     @Override
     public double aplicarPromocion(List<Producto> productos) {
         return 0;
+    }
+    public void validarAtributosPromocion(LocalDate diaInicio, LocalDate diaFin) {
+        if (diaInicio == null) {
+            throw new RuntimeException("El dia de inicio no puede ser nulo");
+        }
+        if (diaFin == null) {
+            throw new RuntimeException("El dia de fin no puede ser nulo");
+        }
+        if (diaInicio.isAfter(diaFin)) {
+            throw new RuntimeException("El dia de inicio no puede ser posterior al dia de fin");
+        }
     }
 }
