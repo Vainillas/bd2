@@ -11,10 +11,10 @@ import java.util.List;
 public class Venta {
     private LocalDateTime fechaHora;
     private Cliente cliente;
-    private List<Producto> listaProductos;
+    private List<ProductoHistorico> listaProductos;
     private double montoTotal;
 
-    public Venta(LocalDateTime fechaHora, Cliente cliente, List<Producto> listaProductos, double montoTotal) {
+    public Venta(LocalDateTime fechaHora, Cliente cliente, List<ProductoHistorico> listaProductos, double montoTotal) {
         this.fechaHora = fechaHora;
         this.cliente = cliente;
         this.listaProductos = listaProductos;
