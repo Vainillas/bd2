@@ -76,7 +76,7 @@ public class TestClass {
         // Act
         double total = carritoCompra.calcularTotal(tarjetaCredito);
         // Assert
-        Assertions.assertEquals(2622.0,total);
+        Assertions.assertEquals(2622.0,total); //TODO: No da el resultado esperado
     }
 
 
