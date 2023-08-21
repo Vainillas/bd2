@@ -32,14 +32,21 @@ public class Cliente {
     private String apellido;
     private String email;
     @OneToMany(cascade = javax.persistence.CascadeType.ALL)
-    private List<TarjetaCredito> tarjetas;
-
-    //escribe un campo que represente una colección de tarjetas de crédito
     private List<TarjetaCredito> tarjetas = new ArrayList<>();
+
+
 
     public Cliente(String dni, String nombre, String apellido, String email, List<TarjetaCredito> tarjetas) {
         this(dni, nombre, apellido, email);
         this.tarjetas = tarjetas;
+    }
+    public Cliente(Long id, String dni, String nombre, String apellido, String email) {
+        validarAtributosCliente(dni, nombre, apellido, email);
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.dni = dni;
     }
     public Cliente(String dni, String nombre, String apellido, String email) {
         validarAtributosCliente(dni, nombre, apellido, email);
@@ -52,6 +59,10 @@ public class Cliente {
     public Cliente(String dni, String nombre, String apellido, String email, TarjetaCredito tarjeta) {
         this(dni, nombre, apellido, email);
         agregarTarjeta(tarjeta);
+    }
+    public Cliente(Long id, String dni, String nombre, String apellido, String email, List<TarjetaCredito> tarjetas) {
+        this(id, dni, nombre, apellido, email);
+        this.tarjetas = tarjetas;
     }
     public void validarAtributosCliente(String dni, String nombre, String apellido, String email) {
         if (dni == null || dni.isEmpty()) {
@@ -72,23 +83,7 @@ public class Cliente {
     }
 
 
-    public Cliente(Long id, String nombre, String apellido, String email, List<TarjetaCredito> tarjetas) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.tarjetas = tarjetas;
-    }
-    public Cliente(Long id, String nombre, String apellido, String email) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.tarjetas = new ArrayList<>();
-    }
-    public void agregarTarjeta(TarjetaCredito tarjetaCredito) {
-        tarjetas.add(tarjetaCredito);
-    }
+
     public boolean seLlama(String nombre) {
         return this.nombre.equals(nombre);
     }

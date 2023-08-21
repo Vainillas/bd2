@@ -1,6 +1,7 @@
 package ar.unrn.tp.test;
 
 import ar.unrn.tp.modelo.Cliente;
+import ar.unrn.tp.modelo.EmisorTarjeta;
 import ar.unrn.tp.modelo.TarjetaCredito;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,8 @@ public class TestPersistencia {
     @Test
     public void persistirCliente(){
         inTransactionExecute((em) -> {
-            Cliente yo = new Cliente(1L, "Mateo", "Aliberti", "mateoaliberti1@gmail.com");
-            TarjetaCredito tarjeta = new TarjetaCredito(true, 1000);
+            Cliente yo = new Cliente(1L, "43303613","Mateo", "Aliberti", "mateoaliberti1@gmail.com");
+            TarjetaCredito tarjeta = new TarjetaCredito(true, 1000, EmisorTarjeta.VISA);
             yo.agregarTarjeta(tarjeta);
             em.persist(yo);
         });
