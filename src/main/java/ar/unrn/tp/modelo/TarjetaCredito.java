@@ -20,11 +20,19 @@ public class TarjetaCredito {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String numero;
     private EmisorTarjeta emisorTarjeta;
     private boolean activa;
     private double fondos;
 
-
+    public TarjetaCredito(Long id, String numero, boolean activa, double fondos, EmisorTarjeta emisorTarjeta) {
+        this(numero, activa, fondos, emisorTarjeta);
+        this.id = id;
+    }
+    public TarjetaCredito(String numero, boolean activa, double fondos, EmisorTarjeta emisorTarjeta) {
+        this(activa, fondos, emisorTarjeta);
+        this.numero = numero;
+    }
 
     public TarjetaCredito(boolean activa, double fondos, EmisorTarjeta emisorTarjeta) {
         this.activa = activa;

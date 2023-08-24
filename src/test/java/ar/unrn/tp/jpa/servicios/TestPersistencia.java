@@ -1,4 +1,4 @@
-package ar.unrn.tp.test;
+package ar.unrn.tp.jpa.servicios;
 
 import ar.unrn.tp.modelo.Cliente;
 import ar.unrn.tp.modelo.EmisorTarjeta;

@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import lombok.NoArgsConstructor;
 
@@ -23,8 +20,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Cliente {
     private String dni;
-    @Id
+
     @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
