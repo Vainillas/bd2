@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PromocionCompra implements Promocion {
-    private final double DESCUENTO = 0.08;
+    private double DESCUENTO = 0.08;
     private LocalDate diaInicio;
     private LocalDate diaFin;
     private EmisorTarjeta emisorTarjeta;
@@ -13,6 +13,10 @@ public class PromocionCompra implements Promocion {
         this.diaInicio = diaInicio;
         this.diaFin = diaFin;
         this.emisorTarjeta = emisorTarjeta;
+    }
+    public PromocionCompra(LocalDate diaInicio, LocalDate diaFin, EmisorTarjeta emisorTarjeta, double descuento) {
+        this(diaInicio, diaFin, emisorTarjeta);
+        this.DESCUENTO = descuento;
     }
 
     @Override

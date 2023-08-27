@@ -3,7 +3,7 @@ package ar.unrn.tp.modelo;
 import java.time.LocalDate;
 import java.util.List;
 public class PromocionProducto implements Promocion{
-    private final double DESCUENTO = 0.05;
+    private double DESCUENTO = 0.05;
     private LocalDate diaInicio;
     private LocalDate diaFin;
     private Marca marca;
@@ -13,6 +13,10 @@ public class PromocionProducto implements Promocion{
         this.diaInicio = diaInicio;
         this.diaFin = diaFin;
         this.marca = marca;
+    }
+    public PromocionProducto(LocalDate diaInicio, LocalDate diaFin, Marca marca, double descuento) {
+        this(diaInicio, diaFin, marca);
+        this.DESCUENTO = descuento;
     }
 
     @Override

@@ -14,11 +14,14 @@ public class Venta {
     private List<ProductoHistorico> listaProductos;
     private double montoTotal;
 
-    public Venta(LocalDateTime fechaHora, Cliente cliente, List<ProductoHistorico> listaProductos, double montoTotal) {
+    public Venta(LocalDateTime fechaHora, Cliente cliente, List<Producto> listaProductosHistoricos, double montoTotal) {
         this.fechaHora = fechaHora;
         this.cliente = cliente;
-        this.listaProductos = listaProductos;
+        this.listaProductos = convertirProductosAHistorico(listaProductosHistoricos);
         this.montoTotal = montoTotal;
+    }
+    public List<ProductoHistorico> convertirProductosAHistorico(List<Producto> listaProductos){
+        return List.of(listaProductos.stream().map(producto -> new ProductoHistorico(producto.getCodigo(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getMarca())).toArray(ProductoHistorico[]::new));
     }
 
 }

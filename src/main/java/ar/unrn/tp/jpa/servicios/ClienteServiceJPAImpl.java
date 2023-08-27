@@ -13,34 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ClienteServiceJPAImpl implements ClienteService {
+public class ClienteServiceJPAImpl extends ServiceJPAImpl implements ClienteService {
     private EntityManagerFactory entityManager;
 
     public ClienteServiceJPAImpl(){
-        setUp();
-    }
-
-    public void setUp(){
-        entityManager = Persistence.createEntityManagerFactory("objectdb:persistenciabd2.tmp");
-    }
-    public void inTransactionExecute(Consumer<EntityManager> bloqueDeCodigo) {
-        EntityManager em = entityManager.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        try {
-            tx.begin();
-
-            bloqueDeCodigo.accept(em);
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            throw e;
-        } finally {
-            if (em != null && em.isOpen())
-                em.close();
-        }
+        super();
     }
     @Override
     public void crearCliente(String nombre, String apellido, String dni, String email) {

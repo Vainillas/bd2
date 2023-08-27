@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CarritoCompra {
-    private final Cliente cliente;
+    private Cliente cliente;
     private List<Producto> productos;
     private TarjetaCredito tarjetaCredito;
     private PromocionCollector promociones;
@@ -17,6 +17,16 @@ public class CarritoCompra {
         this.cliente = cliente;
         this.productos = productos;
         this.promociones = promociones;
+    }
+    public CarritoCompra(List<Producto> productos, TarjetaCredito tarjetaCredito, PromocionCollector promociones) {
+        this.productos = productos;
+        this.tarjetaCredito = tarjetaCredito;
+        this.promociones = promociones;
+    }
+    public CarritoCompra(List<Producto> productos, TarjetaCredito tarjetaCredito) {
+        this.productos = productos;
+        this.tarjetaCredito = tarjetaCredito;
+        this.promociones = new PromocionCollector();
     }
 
     public CarritoCompra(Cliente cliente) {
@@ -35,12 +45,12 @@ public class CarritoCompra {
         return this.promociones.retornarTotal(this.productos);
     }
     public double calcularTotal(TarjetaCredito tarjetaCredito){
+
         return this.promociones.retornarTotal(this.productos, tarjetaCredito);
     }
     public Venta generarVenta(TarjetaCredito tarjetaCredito) {
-        List<ProductoHistorico> productoHistoricos = List.of(productos.stream().map(producto -> new ProductoHistorico(producto.getCodigo(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getMarca())).toArray(ProductoHistorico[]::new));
         pagar(tarjetaCredito);
-        return new Venta(LocalDateTime.now(),this.cliente, productoHistoricos,this.calcularTotal(tarjetaCredito) );
+        return new Venta(LocalDateTime.now(),this.cliente, this.productos,this.calcularTotal(tarjetaCredito) );
     }
 
     private void pagar(TarjetaCredito tarjetaCredito) {

@@ -12,14 +12,19 @@ public class Producto {
     private Marca marca;
     private double precio;
 
-    public Producto(String codigo, String descripcion, Categoria categoria, Marca marca, double precio) {
-        validarAtributosConstructor(descripcion, categoria, precio, marca);
+    public Producto(String codigo, String descripcion, Categoria categoria, double precio){
+
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.marca = marca;
         this.precio = precio;
     }
+    public Producto(String codigo, String descripcion, Categoria categoria, Marca marca, double precio) {
+        this(codigo, descripcion, categoria, precio);
+        validarAtributosConstructor(descripcion, categoria, precio, marca);
+        this.marca = marca;
+    }
+
     private void validarAtributosConstructor(String descripcion, Categoria categoria, double precio, Marca marca) {
         if (descripcion == null || descripcion.isEmpty()) {
             throw new RuntimeException("La descripcion no puede ser nula o vacia");
