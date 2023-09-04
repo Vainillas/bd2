@@ -9,11 +9,17 @@ import java.util.function.Consumer;
 public class ServiceJPAImpl {
     private EntityManagerFactory entityManager;
 
-    public ServiceJPAImpl(){
+    public ServiceJPAImpl(EntityManagerFactory entityManager) {
+        this.entityManager = entityManager;
+    }
+    public ServiceJPAImpl() {
         setUp();
     }
+    public void setUp(String params){
+        entityManager = Persistence.createEntityManagerFactory(params);
+    }
     public void setUp(){
-        entityManager = Persistence.createEntityManagerFactory("objectdb:persistenciabd2.tmp");
+        entityManager = Persistence.createEntityManagerFactory("objectdb:myDbTestFile.tmp;drop");
     }
 
     static void setUpEntityManager(Consumer<EntityManager> bloqueDeCodigo, EntityManagerFactory entityManager) {

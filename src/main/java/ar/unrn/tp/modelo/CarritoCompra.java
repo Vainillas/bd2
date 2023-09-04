@@ -45,7 +45,6 @@ public class CarritoCompra {
         return this.promociones.retornarTotal(this.productos);
     }
     public double calcularTotal(TarjetaCredito tarjetaCredito){
-
         return this.promociones.retornarTotal(this.productos, tarjetaCredito);
     }
     public Venta generarVenta(TarjetaCredito tarjetaCredito) {

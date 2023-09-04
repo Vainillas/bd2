@@ -1,13 +1,26 @@
 package ar.unrn.tp.modelo;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@NoArgsConstructor
 public class PromocionCompra implements Promocion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     private double DESCUENTO = 0.08;
     private LocalDate diaInicio;
     private LocalDate diaFin;
     private EmisorTarjeta emisorTarjeta;
+
+
     public PromocionCompra(LocalDate diaInicio, LocalDate diaFin, EmisorTarjeta emisorTarjeta) {
         validarAtributosPromocion(diaInicio, diaFin);
         this.diaInicio = diaInicio;
@@ -17,6 +30,10 @@ public class PromocionCompra implements Promocion {
     public PromocionCompra(LocalDate diaInicio, LocalDate diaFin, EmisorTarjeta emisorTarjeta, double descuento) {
         this(diaInicio, diaFin, emisorTarjeta);
         this.DESCUENTO = descuento;
+    }
+    public PromocionCompra(Long id, LocalDate diaInicio, LocalDate diaFin, EmisorTarjeta emisorTarjeta, double descuento) {
+        this(diaInicio, diaFin, emisorTarjeta,descuento);
+        this.id = id;
     }
 
     @Override
@@ -35,6 +52,22 @@ public class PromocionCompra implements Promocion {
     public double aplicarPromocion(List<Producto> productos) {
         return 0;
     }
+
+    @Override
+    public double getDescuento() {
+        return DESCUENTO;
+    }
+
+    @Override
+    public boolean estaActiva(LocalDate dia) {
+        return (diaInicio.isEqual(dia) && diaFin.isAfter(dia)) || (diaInicio.isBefore(dia) && diaFin.isEqual(dia)) || (diaInicio.isBefore(dia) && diaFin.isAfter(dia));
+    }
+
+    @Override
+    public boolean estaActivaHoy() {
+        return estaActiva(LocalDate.now());
+    }
+
     public void validarAtributosPromocion(LocalDate diaInicio, LocalDate diaFin) {
         if (diaInicio == null) {
             throw new RuntimeException("El dia de inicio no puede ser nulo");
@@ -46,4 +79,5 @@ public class PromocionCompra implements Promocion {
             throw new RuntimeException("El dia de inicio no puede ser posterior al dia de fin");
         }
     }
+
 }

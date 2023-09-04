@@ -1,12 +1,29 @@
 package ar.unrn.tp.modelo;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class PromocionProducto implements Promocion{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
     private double DESCUENTO = 0.05;
     private LocalDate diaInicio;
     private LocalDate diaFin;
+
+    @OneToOne
+    @JoinColumn(name = "marca_nombre")
     private Marca marca;
+
 
     public PromocionProducto(LocalDate diaInicio, LocalDate diaFin, Marca marca) {
         validarAtributosPromocion(diaInicio, diaFin);
@@ -17,6 +34,10 @@ public class PromocionProducto implements Promocion{
     public PromocionProducto(LocalDate diaInicio, LocalDate diaFin, Marca marca, double descuento) {
         this(diaInicio, diaFin, marca);
         this.DESCUENTO = descuento;
+    }
+    public PromocionProducto(Long id, LocalDate diaInicio, LocalDate diaFin, Marca marca, double descuento) {
+        this(diaInicio, diaFin, marca,descuento);
+        this.id = id;
     }
 
     @Override
@@ -46,5 +67,20 @@ public class PromocionProducto implements Promocion{
     @Override
     public double aplicarPromocion(List<Producto> productos) {
         return aplicarPromocion(productos, null);
+    }
+
+    @Override
+    public double getDescuento() {
+        return DESCUENTO;
+    }
+
+    @Override
+    public boolean estaActiva(LocalDate dia) {
+        return (diaInicio.isEqual(dia) && diaFin.isAfter(dia)) || (diaInicio.isBefore(dia) && diaFin.isEqual(dia)) || (diaInicio.isBefore(dia) && diaFin.isAfter(dia));
+    }
+
+    @Override
+    public boolean estaActivaHoy() {
+        return estaActiva(LocalDate.now());
     }
 }

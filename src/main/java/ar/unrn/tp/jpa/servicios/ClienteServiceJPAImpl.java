@@ -16,14 +16,29 @@ import java.util.function.Consumer;
 public class ClienteServiceJPAImpl extends ServiceJPAImpl implements ClienteService {
     private EntityManagerFactory entityManager;
 
-    public ClienteServiceJPAImpl(){
-        super();
+    public ClienteServiceJPAImpl(EntityManagerFactory entityManager) {
+        super(entityManager);
     }
+
     @Override
-    public void crearCliente(String nombre, String apellido, String dni, String email) {
+    public Cliente encontrarCliente(Long idCliente) {
+        Cliente[] cliente = new Cliente[1];
         inTransactionExecute((em) -> {
-            Cliente c = new Cliente(dni,nombre,apellido,email);
-            em.persist(c);
+            cliente[0] = em.find(Cliente.class, idCliente);
+        });
+        return cliente[0];
+    }
+
+    @Override
+    public void crearCliente(Long id, String nombre, String apellido, String dni, String email) {
+        inTransactionExecute((em) -> {
+            Cliente cliente = em.find(Cliente.class, id);
+            if(cliente!= null){
+                throw new RuntimeException("El cliente ya existe");
+            }else {
+                Cliente c = new Cliente(id, dni, nombre, apellido, email);
+                em.persist(c);
+            }
         });
     }
 

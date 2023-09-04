@@ -30,7 +30,8 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private String email;
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL)
+    //Sacar el fetchtype eager
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TarjetaCredito> tarjetas = new ArrayList<>();
 
 
